@@ -2,36 +2,138 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مشروعي الأول من الموبايل</title>
-    <style>
-        body {
-            margin: 0;
-            background: linear-gradient(135deg, #0f172a, #1e293b);
-            color: #ffffff;
-            font-family: sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            text-align: center;
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>DEEP SPACE CAD // STUDIO EDITION 3D</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+            }
         }
-        .card {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 30px;
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-        }
-        h1 { color: #38bdf8; }
-        p { color: #94a3b8; }
-    </style>
+    </script>
 </head>
 <body>
-    <div class="card">
-        <h1>أهلاً بك يا فنان! 🚀</h1>
-        <p>مشروعك شغال وزي الفل ومرفوع على جيت هب.</p>
+
+    <!-- أشرطة التصوير السينمائي العريضة -->
+    <div class="cinema-bar top" id="cinemaTop"></div>
+    <div class="cinema-bar bottom" id="cinemaBottom">
+        <div class="cinema-caption" id="cinemaCaption">INITIALIZING CINEMATIC CAMERA...</div>
     </div>
+
+    <!-- شاشة الختام السينمائية (End Credits) -->
+    <div class="credits-overlay hidden" id="creditsOverlay">
+        <div class="credits-content">
+            <div class="credits-tag">DEEP SPACE CAD // 3D ASTROPHYSICS ENGINE</div>
+            <h1 class="credits-main">This project was created by Adel Gamal and all rights reserved</h1>
+            <div class="credits-sub">DIRECTED & ENGINEERED IN REAL-TIME WEBGL • 60 FPS</div>
+            <button class="credits-btn" id="btnReplayCinema">🔄 إعادة العرض السينمائي</button>
+            <button class="credits-btn secondary" id="btnExitCredits">🌌 العودة للتحكم الحر</button>
+        </div>
+    </div>
+
+    <!-- دائرة التتبع الهولوجرافية على اليمين -->
+    <div class="target-reticle hidden" id="targetReticle">
+        <div class="reticle-ring outer"></div>
+        <div class="reticle-ring inner"></div>
+        <span class="reticle-tag" id="reticleTag">LOCKED // TARGET</span>
+    </div>
+
+    <!-- الهيدر الهندسي العلوي -->
+    <header class="hud-top">
+        <div class="brand-tag">
+            <h1>DEEP SPACE CAD // STUDIO</h1>
+            <span>ASTROPHYSICS DIGITAL TWIN • 60 FPS</span>
+        </div>
+        <div class="sys-metrics">
+            <button class="rec-pill" id="btnRecord" title="تسجيل فيديو للمشهد">⏺ REC</button>
+            <button class="icon-pill" id="btnAudio" title="تفعيل/كتم الموسيقى والمؤثرات">🔇 الصوت</button>
+            <div class="metric-pill" id="fps">60 FPS</div>
+        </div>
+    </header>
+
+    <!-- المربع الهندسي التفصيلي على الشمال -->
+    <aside class="inspector-panel hidden" id="inspectorPanel">
+        <div class="scanline-overlay"></div>
+        <div class="insp-header">
+            <div class="insp-title">
+                <h2 id="inspName">اسم الجسم</h2>
+                <span class="insp-badge" id="inspCategory">CLASSIFICATION</span>
+            </div>
+            <button class="close-insp" id="btnCloseInsp" title="إغلاق المعاينة">✕</button>
+        </div>
+
+        <p class="insp-desc" id="inspDesc">وصف هندسي وعلمي مفصل للجسم الفضائي.</p>
+
+        <div class="cad-tools-box">
+            <button class="tool-btn" id="btnCutaway">🔪 تشريح الطبقات الداخلية</button>
+            <button class="tool-btn" id="btnLaser">📏 قياس المسافة من الأرض</button>
+        </div>
+
+        <div class="layers-legend hidden" id="layersLegend">
+            <div class="layer-item"><span class="dot core"></span>النواة الداخلية (Inner Core)</div>
+            <div class="layer-item"><span class="dot outer-core"></span>النواة الخارجية (Outer Core)</div>
+            <div class="layer-item"><span class="dot mantle"></span>الوشاح (Mantle)</div>
+            <div class="layer-item"><span class="dot crust"></span>القشرة السطحية (Crust)</div>
+        </div>
+
+        <div class="spec-grid" id="specGrid"></div>
+
+        <div class="gravity-box">
+            <div class="grav-header">
+                <span>⚖️ محاكي الجاذبية (وزن 100 كجم هنا):</span>
+                <strong id="gravWeight">100.0 kg</strong>
+            </div>
+            <div class="grav-bar-bg">
+                <div class="grav-bar-fill" id="gravBar" style="width: 40%;"></div>
+            </div>
+        </div>
+
+        <div class="telemetry-box">
+            <span id="telCoords">POS: X:0.0 Y:0.0 Z:0.0</span>
+            <span id="telEarthDist">EARTH LINK: 0.0M km (0.0s LIGHT)</span>
+            <span id="telStatus">TELEMETRY: NOMINAL // LOCKED</span>
+        </div>
+    </aside>
+
+    <!-- شريط التحكم السفلي -->
+    <nav class="controls-dock" id="controlsDock">
+        <div class="btn-row">
+            <button id="btnCinema" class="nav-btn btn-cinema">🎬 إخراج سينمائي (Movie Mode)</button>
+            <button id="btnCad" class="nav-btn btn-cad">📐 وضع المخطط الهندسي</button>
+            <button id="btnOrbits" class="nav-btn active">⭕ المدارات</button>
+            <button id="btnGrid" class="nav-btn active">🌐 الشبكة</button>
+            <button id="btnSpeed" class="nav-btn">⏩ السرعة: 1x</button>
+        </div>
+        <div class="btn-row" id="planetRow">
+            <span class="row-tag">الكواكب والأقمار:</span>
+            <button class="nav-btn active" data-id="all">🌌 المجرة</button>
+            <button class="nav-btn" data-id="sun">☀️ الشمس</button>
+            <button class="nav-btn" data-id="mercury">عطارد</button>
+            <button class="nav-btn" data-id="venus">الزهرة</button>
+            <button class="nav-btn" data-id="earth">🌍 الأرض</button>
+            <button class="nav-btn" data-id="moon">🌕 القمر</button>
+            <button class="nav-btn" data-id="mars">المريخ</button>
+            <button class="nav-btn" data-id="jupiter">المشتري</button>
+            <button class="nav-btn" data-id="europa">❄️ أوروبا</button>
+            <button class="nav-btn" data-id="saturn">🪐 زحل</button>
+            <button class="nav-btn" data-id="titan">🟠 تيتان</button>
+            <button class="nav-btn" data-id="uranus">أورانوس</button>
+            <button class="nav-btn" data-id="neptune">نبتون</button>
+        </div>
+        <div class="btn-row" id="craftRow">
+            <span class="row-tag">التلسكوبات والمركبات:</span>
+            <button class="nav-btn" data-id="jwst">🔭 جيمس ويب (JWST)</button>
+            <button class="nav-btn" data-id="hubble">🛰️ هابل (Hubble)</button>
+            <button class="nav-btn" data-id="iss">🛸 محطة الفضاء (ISS)</button>
+            <button class="nav-btn" data-id="curiosity">🤖 كيوريوسيتي</button>
+            <button class="nav-btn" data-id="juno">🛰️ مسبار جونو</button>
+            <button class="nav-btn" data-id="cassini">🛰️ مسبار كاسيني</button>
+            <button class="nav-btn" data-id="voyager1">📡 فوييجر 1</button>
+        </div>
+    </nav>
+
+    <script type="module" src="app.js"></script>
 </body>
-</html>
+    </html>
