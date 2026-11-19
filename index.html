@@ -8,21 +8,19 @@
     <script type="importmap">
         {
             "imports": {
-                "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
-                "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+                "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
             }
         }
     </script>
 </head>
 <body>
 
-    <!-- أشرطة التصوير السينمائي العريضة -->
     <div class="cinema-bar top" id="cinemaTop"></div>
     <div class="cinema-bar bottom" id="cinemaBottom">
         <div class="cinema-caption" id="cinemaCaption">INITIALIZING CINEMATIC CAMERA...</div>
     </div>
 
-    <!-- شاشة الختام السينمائية (End Credits) -->
     <div class="credits-overlay hidden" id="creditsOverlay">
         <div class="credits-content">
             <div class="credits-tag">DEEP SPACE CAD // 3D ASTROPHYSICS ENGINE</div>
@@ -33,14 +31,12 @@
         </div>
     </div>
 
-    <!-- دائرة التتبع الهولوجرافية على اليمين -->
     <div class="target-reticle hidden" id="targetReticle">
         <div class="reticle-ring outer"></div>
         <div class="reticle-ring inner"></div>
         <span class="reticle-tag" id="reticleTag">LOCKED // TARGET</span>
     </div>
 
-    <!-- الهيدر الهندسي العلوي -->
     <header class="hud-top">
         <div class="brand-tag">
             <h1>DEEP SPACE CAD // STUDIO</h1>
@@ -53,7 +49,6 @@
         </div>
     </header>
 
-    <!-- المربع الهندسي التفصيلي على الشمال -->
     <aside class="inspector-panel hidden" id="inspectorPanel">
         <div class="scanline-overlay"></div>
         <div class="insp-header">
@@ -97,7 +92,6 @@
         </div>
     </aside>
 
-    <!-- شريط التحكم السفلي -->
     <nav class="controls-dock" id="controlsDock">
         <div class="btn-row">
             <button id="btnCinema" class="nav-btn btn-cinema">🎬 إخراج سينمائي (Movie Mode)</button>
@@ -136,4 +130,4 @@
 
     <script type="module" src="app.js"></script>
 </body>
-    </html>
+</html>
